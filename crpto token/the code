@@ -1,0 +1,48 @@
+from win10toast import ToastNotifier
+import datetime
+import emoji
+import os
+stored=open('look at your birthday','w')
+stored.close
+print("enter your name")
+name=str(input())
+wrong_input1=ToastNotifier()
+wrong_input2=ToastNotifier()
+msg=ToastNotifier()
+msg.show_toast( "Birthday calculator for",name,duration=3)
+print("oky lets go,enter the year you were born")
+year=int(input())
+print('enter the month you were born')
+month=int(input())
+if month>12:
+    wrong_input2.show_toast("wrong date","etermonths in terms of1asjan,2asfeb,3asmarch,etc")
+else:
+    print("enter the day you were born")
+day=int(input())
+if day>30:
+    wrong_input1.show_toast("wrong input","ther is only 30 or 31 months in a year",duration=5)
+else:
+    print('cool let me work')
+birthday=datetime.datetime(year,int(month),day)
+dayz=birthday.strftime('%A')
+pop=ToastNotifier()
+pop.show_toast("you were born on a",dayz)
+stored.write(name+"born on"+dayz)
+stored.close
+endmsg=ToastNotifier()
+endmsg.show_toast(name,"your data has been saved thanks")
+delete_stored=ToastNotifier()
+delete_stored.show_toast("do you want to delet your data")
+thanks=ToastNotifier()
+
+dell=input()
+if dell=='yes':
+    os.remove("look at your birthday")
+else:
+    thanks.show_toast('thanks for trusting us\U0001F924')
+
+
+
+
+
+
