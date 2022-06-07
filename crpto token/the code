@@ -1,6 +1,6 @@
 from win10toast import ToastNotifier
 import datetime
-import emoji
+
 import os
 stored=open('look at your birthday','w')
 stored.close
@@ -15,7 +15,7 @@ year=int(input())
 print('enter the month you were born')
 month=int(input())
 if month>12:
-    wrong_input2.show_toast("wrong date","etermonths in terms of1asjan,2asfeb,3asmarch,etc")
+    wrong_input2.show_toast("wrong date","enter months in terms of 1 as jan,2 as feb,3 as march,etc")
 else:
     print("enter the day you were born")
 day=int(input())
@@ -39,10 +39,4 @@ dell=input()
 if dell=='yes':
     os.remove("look at your birthday")
 else:
-    thanks.show_toast('thanks for trusting us\U0001F924')
-
-
-
-
-
-
+    thanks.show_toast('thanks for trusting ')
