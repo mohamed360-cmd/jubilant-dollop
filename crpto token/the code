@@ -1,42 +1,44 @@
-from win10toast import ToastNotifier
 import datetime
-
 import os
-stored=open('look at your birthday','w')
-stored.close
-print("enter your name")
-name=str(input())
-wrong_input1=ToastNotifier()
-wrong_input2=ToastNotifier()
-msg=ToastNotifier()
-msg.show_toast( "Birthday calculator for",name,duration=3)
-print("oky lets go,enter the year you were born")
-year=int(input())
-print('enter the month you were born')
-month=int(input())
-if month>12:
-    wrong_input2.show_toast("wrong date","enter months in terms of 1 as jan,2 as feb,3 as march,etc")
-else:
-    print("enter the day you were born")
-day=int(input())
-if day>30:
-    wrong_input1.show_toast("wrong input","ther is only 30 or 31 months in a year",duration=5)
-else:
-    print('cool let me work')
-birthday=datetime.datetime(year,int(month),day)
-dayz=birthday.strftime('%A')
-pop=ToastNotifier()
-pop.show_toast("you were born on a",dayz)
-stored.write(name+"born on"+dayz)
-stored.close
-endmsg=ToastNotifier()
-endmsg.show_toast(name,"your data has been saved thanks")
-delete_stored=ToastNotifier()
-delete_stored.show_toast("do you want to delet your data")
-thanks=ToastNotifier()
+from win10toast import ToastNotifier
 
-dell=input()
-if dell=='yes':
-    os.remove("look at your birthday")
-else:
-    thanks.show_toast('thanks for trusting ')
+def get_day_of_week(year, month, day):
+    birthday = datetime.datetime(year, month, day)
+    return birthday.strftime('%A')
+
+def main():
+    notifier = ToastNotifier()
+    print("Enter your name:")
+    name = input().strip()
+    notifier.show_toast("Birthday Calculator", f"Welcome, {name}!", duration=3)
+
+    while True:
+        try:
+            year = int(input("Enter the year you were born: "))
+            month = int(input("Enter the month you were born (1-12): "))
+            day = int(input("Enter the day you were born (1-31): "))
+            birthday = datetime.datetime(year, month, day)
+            break
+        except ValueError:
+            notifier.show_toast("Invalid Input", "Please enter a valid date!", duration=3)
+
+    day_of_week = get_day_of_week(year, month, day)
+    notifier.show_toast("Birthday Calculator", f"You were born on {day_of_week}!", duration=5)
+
+    with open('look_at_your_birthday.txt', 'w') as f:
+        f.write(f"{name} born on {day_of_week}")
+
+    while True:
+        choice = input("Do you want to delete your data (yes/no)? ").strip().lower()
+        if choice == "yes":
+            os.remove("look_at_your_birthday.txt")
+            notifier.show_toast("Data Deleted", "Your data has been deleted. Thanks!")
+            break
+        elif choice == "no":
+            notifier.show_toast("Data Saved", "Your data has been saved. Thanks!")
+            break
+        else:
+            notifier.show_toast("Invalid Input", "Please enter yes or no!", duration=3)
+
+if __name__ == "__main__":
+    main()
